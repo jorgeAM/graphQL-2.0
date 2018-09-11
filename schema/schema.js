@@ -17,14 +17,32 @@ const typeDefs = `
     author: User!
   }
 
+  type AuthPayload {
+    token: String
+    user: User
+  }
+
   input NewPost {
     title: String!
     content: String!
     author: ID!
   }
 
+  input NewUser {
+    name: String!
+    surname: String!
+    email: String!
+    password: String!
+  }
+
+  input Credentials {
+    email: String!
+    password: String!
+  }
+
   type Mutation {
-    signup (name: String!, surname: String!, email: String!, password: String!): User
+    signup (user: NewUser): User
+    login (credentials: Credentials): AuthPayload
     addPost (post: NewPost): Post
   }
 

@@ -1,14 +1,15 @@
 const User = require('../models/user');
 const Post = require('../models/post');
 const bcrypt = require('bcrypt');
+const jwt = require('../services/jwt');
 
 const resolvers = {
   Mutation: {
     signup: async (_, args) => await User.create({
-      name: args.name,
-      surname: args.surname,
-      email: args.email,
-      password:  await bcrypt.hash(args.password, 10),
+      name: args.user.name,
+      surname: args.user.surname,
+      email: args.user.email,
+      password:  await bcrypt.hash(args.user.password, 10),
     }),
     addPost: async (_, args) => await Post.create(args.post),
   },
