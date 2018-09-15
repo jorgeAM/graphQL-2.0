@@ -25,7 +25,11 @@ const resolvers = {
   Query: {
     users: async () => await User.find(),
     user: async (_, args) => await User.findById(args.id),
-    posts: async () => await Post.find(),
+    posts: async (_, args, ctx) => {
+      if (!ctx.user) throw new Error('No has iniciado sesión');
+      else return Post.find();
+    },
+
     post: async (_, args) => await Post.findById(args.id),
   },
   User: {
